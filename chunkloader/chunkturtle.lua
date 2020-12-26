@@ -26,7 +26,7 @@ function checkFuel()
     turtle.select(1)
     
     if(turtle.getFuelLevel() < 50) then
-        index = getEnderType(3)
+        local index = getEnderType(3)
         if (index ~= nil) then
             turtle.select(index)
             if(turtle.detectUp()) then
@@ -67,7 +67,7 @@ function depositEnder(index, itemIndex)
 	turtle.digUp()
 end
 function placeChest()
-	index = getEnderType(2)
+	local index = getEnderType(2)
 	if(index ~= nil) then
 		openEnder(index)
 		turtle.select(getItemIndex("minecraft:chest"))
@@ -75,7 +75,7 @@ function placeChest()
 	end
 end
 function placeHopper()
-	index = getEnderType(1)
+	local index = getEnderType(1)
 	if(index ~= nil) then
 		openEnder(index)
 		turtle.select(getItemIndex("minecraft:hopper"))
@@ -175,6 +175,23 @@ function digAndMove(n, heading)
         checkFuel()
     end
 end
+function digAndReturn(n)
+    for x = 1, n, 1 do
+    	local xpos, ypos, zpos = gps.locate()
+        while(turtle.detect()) do
+           	turtle.dig()
+           	local index = getItemIndex("minecraft:hopper")
+           	if (index ~= nil) then
+           		local item = turtle.getItemDetail(index)
+           		if (item["count"] >= 20) then
+           			depositEnder(getEnderType(1), index)
+           		end
+            end
+        end
+        turtle.forward()
+        checkFuel()
+    end
+end
 function parseParams(data)
     coords = {}
     params = split(data, " ")
@@ -187,6 +204,7 @@ function parseParams(data)
 end
 function moveTo(coords, heading)
 	print(heading)
+	startcoords = gps.locate()
     local currX, currY, currZ = gps.locate()
     local xDiff, yDiff, zDiff = coords.x - currX, coords.y - currY, coords.z - currZ
     print(string.format("Distances from start: %d %d %d", xDiff, yDiff, zDiff))
@@ -208,7 +226,32 @@ function moveTo(coords, heading)
  
     return heading
 end
+
+function returnTo(coords, heading)
+    local currX, currY, currZ = gps.locate()
+    local xDiff, yDiff, zDiff = coords.x - currX, coords.y - currY, coords.z - currZ
+    print(string.format("Distances from end: %d %d %d", xDiff, yDiff, zDiff))
+    
+    -- Move to Z start
+    heading = setHeadingZ(zDiff, heading)
+    digAndReturn(math.abs(zDiff))
+    -- Move to X start
+    heading = setHeadingX(xDiff, heading)
+    digAndReturn(math.abs(xDiff))
+
+    
+    
+    
+
+    return heading
+end
+startcoords = gps.locate()
 local finalHeading = moveTo(vector.new(-91,162,232), getOrientation())
-
-
+turtle.turnLeft()
+turtle.turnLeft()
+returnTo(startcoords, getOrientation())
+local hoppers = getItemIndex("minecraft:hopper")
+if(hoppers ~= nil) then
+	depositEnder(getEnderType(1), hoppers)
+end
 -- pastebin run wPtGKMam acticlacid chunky / /chunkloader/ .
