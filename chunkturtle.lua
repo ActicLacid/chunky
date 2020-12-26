@@ -200,7 +200,7 @@ function moveTo(coords, heading)
  
     -- Move to Z start
     heading = setHeadingZ(zDiff, heading)
-    digAndMove(math.abs(zDiff), heading))
+    digAndMove(math.abs(zDiff), heading)
 
  
     return heading
