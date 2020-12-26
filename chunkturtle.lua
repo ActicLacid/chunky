@@ -101,6 +101,7 @@ function getOrientation()
     if not turtle.forward() then
         for j=1,6 do
             if not turtle.forward() then
+            	checkFuel()
                 turtle.dig()
             else 
                 break 
@@ -207,8 +208,7 @@ function moveTo(coords, heading)
  
     return heading
 end
-local heading = getOrientation()
-local finalHeading = moveTo(vector.new(-91,162,232), heading)
+local finalHeading = moveTo(vector.new(-91,162,232), getOrientation())
 
 
 -- pastebin run wPtGKMam acticlacid chunky . . .
