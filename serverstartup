@@ -1,0 +1,4 @@
+if not fs.exists("/startup") then
+fs.copy("disk/mineserver", "/startup")
+fs.copy("disk/mineserver", "/mineserver")
+end
