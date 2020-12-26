@@ -207,7 +207,8 @@ function moveTo(coords, heading)
  
     return heading
 end
-local finalHeading = moveTo(vector.new(-91,162,232), getOrientation())
+local heading = getOrientation()
+local finalHeading = moveTo(vector.new(-91,162,232), heading)
 
 
 -- pastebin run wPtGKMam acticlacid chunky . . .
