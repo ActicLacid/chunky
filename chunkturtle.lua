@@ -185,7 +185,7 @@ function parseParams(data)
     return (coords)
 end
 function moveTo(coords, heading)
-	print heading
+	print(heading)
     local currX, currY, currZ = gps.locate()
     local xDiff, yDiff, zDiff = coords.x - currX, coords.y - currY, coords.z - currZ
     print(string.format("Distances from start: %d %d %d", xDiff, yDiff, zDiff))
@@ -208,3 +208,6 @@ function moveTo(coords, heading)
     return heading
 end
 local finalHeading = moveTo(vector.new(-91,162,232), getOrientation())
+
+
+-- pastebin run wPtGKMam acticlacid chunky . . .
