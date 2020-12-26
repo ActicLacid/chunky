@@ -196,6 +196,7 @@ function moveTo(coords, heading)
     
     -- Move to X start
     heading = setHeadingX(xDiff, heading)
+    print(heading)
     digAndMove(math.abs(xDiff), heading)
  
     -- Move to Z start
