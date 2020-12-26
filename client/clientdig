@@ -435,13 +435,14 @@ function returnTo(coords, heading)
         digAndMoveUp(math.abs(yDiff))
     end
     manageInventory()
+    -- Move to Z start
+    heading = setHeadingZ(zDiff, heading)
+    digAndMove(math.abs(zDiff))
     -- Move to X start
     heading = setHeadingX(xDiff, heading)
     digAndMove(math.abs(xDiff))
 
-    -- Move to Z start
-    heading = setHeadingZ(zDiff, heading)
-    digAndMove(math.abs(zDiff))
+    
     
     
 
