@@ -185,6 +185,7 @@ function parseParams(data)
     return (coords)
 end
 function moveTo(coords, heading)
+	print heading
     local currX, currY, currZ = gps.locate()
     local xDiff, yDiff, zDiff = coords.x - currX, coords.y - currY, coords.z - currZ
     print(string.format("Distances from start: %d %d %d", xDiff, yDiff, zDiff))
