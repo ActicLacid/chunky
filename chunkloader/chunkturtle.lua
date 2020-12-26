@@ -93,7 +93,20 @@ function loadChunk()
 	turtle.forward()
 	turtle.down()
 	turtle.digDown()
-	depositEnder(getEnderType(2), getItemIndex("minecraft:chest"))
+	local index = getItemIndex("minecraft:chest")
+	if(index ~= nil) then
+		local item = getItemDetail(index)
+		if (item["count"] >= 5) then
+		depositEnder(getEnderType(2), index)
+		end
+	end
+	index = getItemIndex("minecraft:hopper")
+	if(index ~= nil) then
+		item = getItemDetail(index)
+		if (item["count"] >= 5) then
+		depositEnder(getEnderType(1), index)
+		end
+	end
 	turtle.down()
 end
 function getOrientation()
@@ -204,7 +217,7 @@ function parseParams(data)
 end
 function moveTo(coords, heading)
 	print(heading)
-	startcoords = gps.locate()
+	startcoords = vector.new(gps.locate())
     local currX, currY, currZ = gps.locate()
     local xDiff, yDiff, zDiff = coords.x - currX, coords.y - currY, coords.z - currZ
     print(string.format("Distances from start: %d %d %d", xDiff, yDiff, zDiff))
@@ -245,7 +258,7 @@ function returnTo(coords, heading)
 
     return heading
 end
-startcoords = gps.locate()
+startcoords = vector.new(gps.locate())
 local finalHeading = moveTo(vector.new(-91,162,232), getOrientation())
 turtle.turnLeft()
 turtle.turnLeft()
