@@ -81,9 +81,16 @@ end
 function placeHopper()
 	local index = getEnderType(1)
 	if(index ~= nil) then
-		openEnder(index)
+		turtle.select(index)
+		if(turtle.detectUp()) then
+		turtle.digUp()
+		end
+    	turtle.placeUp()
+    	turtle.suckUp(2)
+		turtle.digUp()
 		turtle.select(getItemIndex("minecraft:hopper"))
 		turtle.place()
+		turtle.drop()
 	end
 end
 function loadChunk()
