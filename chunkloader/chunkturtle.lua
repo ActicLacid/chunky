@@ -1,5 +1,9 @@
 local SLOT_COUNT = 16
+local PORT = 999
 
+
+local modem = peripheral.wrap("left")
+modem.open(PORT)
 function getItemIndex(name)
     for slot = 1, SLOT_COUNT, 1 do
         local item = turtle.getItemDetail(slot)
@@ -96,7 +100,7 @@ function loadChunk()
 	index = getItemIndex("minecraft:chest")
 	if(index ~= nil) then
 		local item = turtle.getItemDetail(index)
-		if (item["count"] >= 5) then
+		if (item["count"] >= 1) then
 			depositEnder(getEnderType(2), index)
 		end
 	end
@@ -309,7 +313,9 @@ function manageInventory()
 
     turtle.digUp()
 end
-manageInventory()
+print("Waiting for test signal")
+event, side, senderChannel, replyChannel, msg, distance = os.pullEvent("modem_message")
+print("Starting")
 startcoords = vector.new(gps.locate())
 local finalHeading = moveTo(vector.new(-91,162,232), getOrientation())
 turtle.turnLeft()
@@ -319,6 +325,5 @@ local hoppers = getItemIndex("minecraft:hopper")
 if(hoppers ~= nil) then
 	depositEnder(getEnderType(1), hoppers)
 end
-
 
 -- pastebin run wPtGKMam acticlacid chunky / /chunkloader/ .
