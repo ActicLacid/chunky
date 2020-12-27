@@ -301,6 +301,7 @@ function manageInventory()
             	else
             		turtle.select(slot)
             		turtle.dropUp()	
+            	end
             end
         end
     end
