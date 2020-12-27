@@ -116,7 +116,6 @@ function loadChunk()
 	turtle.back()
 	turtle.turnRight()
 	turtle.turnRight()
-	turtle.down()
 	index = getItemIndex("minecraft:chest")
 	if(index ~= nil) then
 		local item = turtle.getItemDetail(index)
