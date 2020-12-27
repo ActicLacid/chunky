@@ -1,0 +1,43 @@
+local SLOT_COUNT = 16
+local BOT_PORT = 6969
+local COMP_PORT = 6970
+function getItemIndex(name)
+    for slot = 1, SLOT_COUNT, 1 do
+        local item = turtle.getItemDetail(slot)
+        if(item ~= nil) then
+            if(item["name"] == name) then
+                return slot
+            end
+        end
+    end
+    return nil
+end
+function checkFuel()
+    turtle.select(1)
+    if(turtle.getFuelLevel() < 50) then
+        local index = getItemIndex("enderstorage:ender_storage")
+        if (index ~= nil) then
+            turtle.select(index)
+            if(turtle.detectUp()) then
+				turtle.digUp()
+			end
+            turtle.placeUp()
+            turtle.suckUp()
+            turtle.select(getItemIndex("minecraft:lava_bucket"))
+            turtle.refuel()
+            turtle.dropUp()
+			turtle.select(index)
+            turtle.digUp()
+            return true
+        end
+        return false
+    else
+        return true
+    end
+end
+os.pullEvent("modem_message")
+while(true) do
+	modem.transmit(COMP_PORT, BOT_PORT, "cum")
+	checkFuel()
+	turtle.forward()
+end
