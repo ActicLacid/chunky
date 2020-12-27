@@ -320,10 +320,9 @@ function manageInventory()
 
     turtle.digUp()
 end
-print("Waiting for test signal")
-event, side, senderChannel, replyChannel, msg, distance = os.pullEvent("modem_message")
-print("Starting")
 for i = 1, 50, 1, do
+	orient = getOrientation()
+	turtle.back()
 	startcoords = vector.new(gps.locate())
-	moveTo(vector.new(startcoords.x+16,162,startcoords.z+16), getOrientation())
+	moveTo(vector.new(startcoords.x+16,162,startcoords.z+16), orient)
 -- pastebin run wPtGKMam acticlacid chunky / /chunkloader/ .
