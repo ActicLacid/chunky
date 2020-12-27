@@ -337,7 +337,7 @@ for i = 1, 50, 1 do
 	orient = getOrientation()
 	turtle.up()
 	turtle.up()
-	if(i > 1) do
+	if(i > 1) then
 		turtle.back()
 	end
 	startcoords = vector.new(gps.locate())
