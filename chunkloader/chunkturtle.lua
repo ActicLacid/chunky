@@ -95,14 +95,14 @@ function loadChunk()
 	turtle.digDown()
 	local index = getItemIndex("minecraft:chest")
 	if(index ~= nil) then
-		local item = getItemDetail(index)
+		local item = turtle.getItemDetail(index)
 		if (item["count"] >= 5) then
-		depositEnder(getEnderType(2), index)
+			depositEnder(getEnderType(2), index)
 		end
 	end
 	index = getItemIndex("minecraft:hopper")
 	if(index ~= nil) then
-		item = getItemDetail(index)
+		item = turtle.getItemDetail(index)
 		if (item["count"] >= 5) then
 		depositEnder(getEnderType(1), index)
 		end
