@@ -93,7 +93,7 @@ function loadChunk()
 	turtle.forward()
 	turtle.down()
 	turtle.digDown()
-	local index = getItemIndex("minecraft:chest")
+	index = getItemIndex("minecraft:chest")
 	if(index ~= nil) then
 		local item = turtle.getItemDetail(index)
 		if (item["count"] >= 5) then
@@ -258,6 +258,57 @@ function returnTo(coords, heading)
 
     return heading
 end
+
+
+
+
+function manageInventory()
+    index = getEnderType(3)
+    if(index ~= nil) then
+        turtle.select(index)
+        turtle.digUp()      
+        turtle.placeUp()  
+    end
+    -- Chest is now deployed
+    for slot = 1, SLOT_COUNT, 1 do
+        local item = turtle.getItemDetail(slot)
+        if(item ~= nil) then
+            if(item["name"] ~= "enderstorage:ender_storage") then
+            	if(item["name"] == "minecraft:chest") then
+            		index2 = getEnderType(2)
+            		turtle.select(index)
+            		turtle.digUp()
+            		turtle.select(index2)
+            		turtle.placeUp()
+            		turtle.select(slot)
+            		turtle.dropUp()
+            		turtle.select(index2)
+            		turtle.digUp()
+            		turtle.select(index)
+            		turtle.placeUp()
+            	elseif(item["name"] == "minecraft:hopper") then
+            		index2 = getEnderType(1)
+            		turtle.select(index)
+            		turtle.digUp()
+            		turtle.select(index2)
+            		turtle.placeUp()
+            		turtle.select(slot)
+            		turtle.dropUp()
+            		turtle.select(index2)
+            		turtle.digUp()
+            		turtle.select(index)
+            		turtle.placeUp()
+            	else
+            		turtle.select(slot)
+            		turtle.dropUp()	
+            end
+        end
+    end
+    -- Items are now stored
+
+    turtle.digUp()
+end
+manageInventory()
 startcoords = vector.new(gps.locate())
 local finalHeading = moveTo(vector.new(-91,162,232), getOrientation())
 turtle.turnLeft()
@@ -267,4 +318,6 @@ local hoppers = getItemIndex("minecraft:hopper")
 if(hoppers ~= nil) then
 	depositEnder(getEnderType(1), hoppers)
 end
+
+
 -- pastebin run wPtGKMam acticlacid chunky / /chunkloader/ .
