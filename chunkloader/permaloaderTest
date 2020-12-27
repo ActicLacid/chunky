@@ -41,3 +41,5 @@ while(true) do
 	checkFuel()
 	turtle.forward()
 end
+
+-- pastebin run wPtGKMam acticlacid chunky / /chunkloader/ .
