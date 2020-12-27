@@ -1,6 +1,8 @@
 local SLOT_COUNT = 16
 local BOT_PORT = 6969
 local COMP_PORT = 6970
+modem = peripheral.wrap("left")
+modem.open(BOT_PORT)
 function getItemIndex(name)
     for slot = 1, SLOT_COUNT, 1 do
         local item = turtle.getItemDetail(slot)
@@ -35,7 +37,9 @@ function checkFuel()
         return true
     end
 end
+print("Waiting for controller start command. . .")
 os.pullEvent("modem_message")
+print("Signal recieved. Starting test...")
 while(true) do
 	modem.transmit(COMP_PORT, BOT_PORT, "cum")
 	checkFuel()
