@@ -323,14 +323,7 @@ end
 print("Waiting for test signal")
 event, side, senderChannel, replyChannel, msg, distance = os.pullEvent("modem_message")
 print("Starting")
-startcoords = vector.new(gps.locate())
-local finalHeading = moveTo(vector.new(-91,162,232), getOrientation())
-turtle.turnLeft()
-turtle.turnLeft()
-returnTo(startcoords, getOrientation())
-local hoppers = getItemIndex("minecraft:hopper")
-if(hoppers ~= nil) then
-	depositEnder(getEnderType(1), hoppers)
-end
-
+for i = 1, 50, 1, do
+	startcoords = vector.new(gps.locate())
+	moveTo(vector.new(startcoords.x+16,162,startcoords.z+16), getOrientation())
 -- pastebin run wPtGKMam acticlacid chunky / /chunkloader/ .
