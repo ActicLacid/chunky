@@ -320,7 +320,7 @@ function manageInventory()
 
     turtle.digUp()
 end
-for i = 1, 50, 1, do
+for i = 1, 50, 1 do
 	orient = getOrientation()
 	turtle.back()
 	startcoords = vector.new(gps.locate())
