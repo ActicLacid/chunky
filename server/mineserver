@@ -1,4 +1,4 @@
--- Code by Michael Reeves, will be edited to support a mainframe that interfaces with the permaloader --
+-- Code by Michael Reeves, will be edited to support the chunkloaders as soon as I get that working --
 --PHONE  SERVER--
 
 local SERVER_PORT = 420
@@ -162,9 +162,9 @@ while (true) do
     print("Waiting for target signal...")
     event, side, senderChannel, replyChannel, msg, distance = os.pullEvent("modem_message")
 	if(msg == "RETURN_REQUEST") then
-    	coords = gps.locate()
-    	returnpos = vector.new(coords[1],coords[2]+1,coords[3])
-    	modem.transmit(replyChannel, returnpos)
+    	target = vector.new(gps.locate())
+    	payloadMessage = string.format("%d %d %d", target.x, target.y+1, target.z)
+    	modem.transmit(replyChannel, SERVER_PORT, payloadMessage)
     else
 	    	
 	    -- Parse out coordinates and options
