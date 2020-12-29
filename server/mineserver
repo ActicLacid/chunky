@@ -1,4 +1,4 @@
--- Code by Michael Reeves, will be edited to support the chunkloaders as soon as I get that working --
+-- Code by Michael Reeves, will be edited to support a mainframe that interfaces with the permaloader --
 --PHONE  SERVER--
 
 local SERVER_PORT = 420
@@ -88,7 +88,6 @@ function deploy(startCoords, quarySize, endCoords, options)
     while(turtle.detect()) do
         os.sleep(0.3)
     end
-
     --Place and turn on turtle
     turtle.place()
     peripheral.call("front", "turnOn")
@@ -162,51 +161,57 @@ while (true) do
     -- Wait for phone
     print("Waiting for target signal...")
     event, side, senderChannel, replyChannel, msg, distance = os.pullEvent("modem_message")
-
-    -- Parse out coordinates and options
-    local args = split(msg, " ")
-    local withStorage = args[#args]
-    withStorage = withStorage == "1" and true or false
-    data = parseParams(msg)
-    options = {}
-    options["withStorage"] = True
-
-    target = data[1]
-    size = data[2]
-
-    finish = vector.new(gps.locate())
-    finish.y = finish.y + 1
-    print(string.format( "RECEIVED QUARY REQUEST AT: %d %d %d", target.x, target.y, target.z))
-
-    tab, xDf, zDf = table.unpack(getPositioningTable(size.x, size.z, segmentation))
-
-    print(string.format("Deploying %d bots...", #tab))
-    for i = 1, #tab, 1 do
-        xOffset, zOffset, width, height = table.unpack(tab[i])
-        local offsetTarget = vector.new(target.x + xOffset, target.y, target.z + zOffset)
-        local sclaedSize = vector.new(width, size.y, height)
-
-        deploy(offsetTarget, sclaedSize, finish, options)
-        os.sleep(1)
-        print(string.format( "Deploying to;  %d %d %d    %d %d",  target.x + xOffset, target.y, target.z + zOffset, sclaedSize.x, sclaedSize.z))
-    end
-
-    -- All bots deployed, wait for last bot finished signal
-    event, side, senderChannel, replyChannel, msg, distance = os.pullEvent("modem_message")
-    turtle.digUp()
-	turtle.turnLeft()
-	turtle.forward(1)
-	turtle.turnRight()
-	turtle.select(getItemIndex("enderstorage:ender_storage"))
-	endercount = (turtle.getItemCount() - 2)
-	if (endercount ~= 0) then
-		print(string.format("Depositing %d Ender Chests.", endercount))
-		turtle.drop(endercount)
+	if(msg == "RETURN_REQUEST") then
+    	coords = gps.locate()
+    	returnpos = vector.new(coords[1],coords[2]+1,coords[3])
+    	modem.transmit(replyChannel, returnpos)
+    else
+	    	
+	    -- Parse out coordinates and options
+	    local args = split(msg, " ")
+	    local withStorage = args[#args]
+	    withStorage = withStorage == "1" and true or false
+	    data = parseParams(msg)
+	    options = {}
+	    options["withStorage"] = True
+	
+	    target = data[1]
+	    size = data[2]
+	
+	    finish = vector.new(gps.locate())
+	    finish.y = finish.y + 1
+	    print(string.format( "RECEIVED QUARY REQUEST AT: %d %d %d", target.x, target.y, target.z))
+	
+	    tab, xDf, zDf = table.unpack(getPositioningTable(size.x, size.z, segmentation))
+	
+	    print(string.format("Deploying %d bots...", #tab))
+	    for i = 1, #tab, 1 do
+	        xOffset, zOffset, width, height = table.unpack(tab[i])
+	        local offsetTarget = vector.new(target.x + xOffset, target.y, target.z + zOffset)
+	        local sclaedSize = vector.new(width, size.y, height)
+	
+	        deploy(offsetTarget, sclaedSize, finish, options)
+	        os.sleep(1)
+	        print(string.format( "Deploying to;  %d %d %d    %d %d",  target.x + xOffset, target.y, target.z + zOffset, sclaedSize.x, sclaedSize.z))
+	    end
+	
+	    -- All bots deployed, wait for last bot finished signal
+	    event, side, senderChannel, replyChannel, msg, distance = os.pullEvent("modem_message")
+	    turtle.digUp()
+		turtle.turnLeft()
+		turtle.forward(1)
+		turtle.turnRight()
+		turtle.select(getItemIndex("enderstorage:ender_storage"))
+		endercount = (turtle.getItemCount() - 2)
+		if (endercount ~= 0) then
+			print(string.format("Depositing %d Ender Chests.", endercount))
+			turtle.drop(endercount)
+		end
+		
+		turtle.turnRight()
+		turtle.forward(1)
+		turtle.turnLeft()
+		
+	
 	end
-	
-	turtle.turnRight()
-	turtle.forward(1)
-	turtle.turnLeft()
-	
-
 end
