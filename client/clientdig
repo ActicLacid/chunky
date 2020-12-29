@@ -238,7 +238,7 @@ finalHeading = NORTH_HEADING
 ------------------------------------------------------------------------------------------
 
 DROPPED_ITEMS = {
-    "minecraft:stone",
+    "minecraft:stone",	
     "minecraft:dirt",
 	"minecraft:basalt",
     "minecraft:granite",
@@ -301,7 +301,6 @@ function getLavaIndex()
     return nil
 end
 function manageInventory()
-    dropItems()
     index = getEnderIndex()
     if(index ~= nil) then
         turtle.select(index)
@@ -310,12 +309,9 @@ function manageInventory()
     end
     -- Chest is now deployed
     for slot = 1, SLOT_COUNT, 1 do
-        local item = turtle.getItemDetail(slot)
         if(item ~= nil) then
-            if(item["name"] ~= "minecraft:coal_block" and item["name"] ~= "minecraft:coal" and item["name"] ~= "minecraft:charcoal") then
-                turtle.select(slot)
-                turtle.dropUp()
-            end
+            turtle.select(slot)
+            turtle.dropUp()
         end
     end
     -- Items are now stored
@@ -460,4 +456,4 @@ end
 
 modem.transmit(SERVER_PORT, CLIENT_PORT, "cum")
 
---- pastebin run wPtGKMam acticlacid chunky / /client/ .
+-- pastebin run wPtGKMam acticlacid chunky / /client/ .
