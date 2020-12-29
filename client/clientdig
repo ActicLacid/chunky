@@ -455,7 +455,7 @@ end
 
 endCoords = data[3]
 returnTo(endCoords ,finishedHeading)
-
+manageInventory()
 local timoutWait = 90
 for i = 1, timoutWait, 1 do
     os.sleep(1)
