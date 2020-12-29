@@ -9,7 +9,7 @@ modem.open(CLIENT_PORT)
 function checkForDroppedChest()
 	local success, block = turtle.inspectUp()
 	if success then
-		if (block.name == "enderstorage:ender_storage")
+		if (block.name == "enderstorage:ender_storage") then
 			turtle.digUp()
 		end
 	end
@@ -292,5 +292,3 @@ for i = 1, timoutWait, 1 do
 end
 
 modem.transmit(SERVER_PORT, CLIENT_PORT, "cum")
-
--- pastebin run wPtGKMam acticlacid chunky / /client/ .
