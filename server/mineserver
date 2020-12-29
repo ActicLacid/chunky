@@ -58,17 +58,31 @@ function getItemIndex(itemName)
 end
 
 function checkFuel()
-    turtle.select(1)
-    
+    index = getItemIndex("enderstorage:ender_storage")
     if(turtle.getFuelLevel() < 50) then
-        print("Attempting Refuel...")
-        for slot = 1, SLOT_COUNT, 1 do
-            turtle.select(slot)
-            if(turtle.refuel(1)) then
-                return true
-            end
-        end
-        return false
+       	if(index ~= nil) then
+       		if (not turtle.detect()) then
+       			turtle.select(index)
+       			turtle.suck()
+       			lava = getItemIndex("minecraft:lava_bucket")
+       			if(lava ~= nil) then
+       				turtle.select(lava)
+       				turtle.refuel()
+       				turtle.drop()
+       				turtle.select(index)
+       				turtle.dig()
+       				return true
+       			else
+       				return false
+       			end
+       		else
+       			print("Front is obstructed")
+       			return false
+       		end
+       	else
+       		print("Enderchest not found.")
+       		return false
+       	end
     else
         return true
     end
@@ -185,6 +199,7 @@ while (true) do
 	    tab, xDf, zDf = table.unpack(getPositioningTable(size.x, size.z, segmentation))
 	
 	    print(string.format("Deploying %d bots...", #tab))
+	    checkFuel()
 	    for i = 1, #tab, 1 do
 	        xOffset, zOffset, width, height = table.unpack(tab[i])
 	        local offsetTarget = vector.new(target.x + xOffset, target.y, target.z + zOffset)
