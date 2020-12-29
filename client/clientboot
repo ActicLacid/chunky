@@ -25,6 +25,20 @@ function split (inputstr, sep)
     return t
 end
 
+
+function getItemIndex(name)
+    for slot = 1, SLOT_COUNT, 1 do
+        local item = turtle.getItemDetail(slot)
+        if(item ~= nil) then
+            if(item["name"] == name) then
+                return slot
+            end
+        end
+    end
+    return nil
+end
+
+
 function parseParams(data)
     coords = {}
     params = split(data, " ")
@@ -35,7 +49,11 @@ function parseParams(data)
 
     return (coords)
 end
-
+function parseReturn(data)
+	params = split(data, " ")
+	target = vector.new(params[1], params[2], params[3])
+	return target
+end
 
 function checkFuel()
     turtle.select(1)
@@ -279,7 +297,7 @@ while true do
  	event = {os.pullEvent()}
 	if event[1] == "modem_message" then
 		side, freq, replyFreq, msg = event
-    	returnTo(vector.new(msg), getOrientation)
+    	returnTo(parseReturn(msg), getOrientation)
     	break
     elseif event[1] == "timer" and event[2] == timeout then
   		os.startTimer(1)
@@ -292,3 +310,5 @@ for i = 1, timoutWait, 1 do
 end
 
 modem.transmit(SERVER_PORT, CLIENT_PORT, "cum")
+
+-- pastebin run wPtGKMam acticlacid chunky / /client/ .
