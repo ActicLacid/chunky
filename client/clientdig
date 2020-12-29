@@ -6,7 +6,8 @@ local SLOT_COUNT = 16
 
 local CLIENT_PORT = 0
 local SERVER_PORT = 420
-
+shell.run("delete", "startup")
+shell.run("copy", "clientboot", "startup")
 local modem = peripheral.wrap("left")
 modem.open(CLIENT_PORT)
 
