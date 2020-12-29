@@ -1,5 +1,6 @@
 if not fs.exists("/startup") then
 fs.copy("disk/clientdig", "/startup")
 fs.copy("disk/clientdig", "/clientdig")
+fs.copy("disk/clientboot", "/clientboot")
 shell.run("clientdig")
 end
