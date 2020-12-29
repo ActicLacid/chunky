@@ -33,6 +33,18 @@ function parseParams(data)
     return (coords)
 end
 
+function getItemIndex(name)
+    for slot = 1, SLOT_COUNT, 1 do
+        local item = turtle.getItemDetail(slot)
+        if(item ~= nil) then
+            if(item["name"] == name) then
+                return slot
+            end
+        end
+    end
+    return nil
+end
+
 
 function checkFuel()
     turtle.select(1)
@@ -208,18 +220,13 @@ modem.transmit(SERVER_PORT, CLIENT_PORT, "CLIENT_DEPLOYED")
 event, side, senderChannel, replyChannel, msg, distance = os.pullEvent("modem_message")
 data = parseParams(msg)
 
--- Pick up coal and refuel
-local fuelNeeded = calculateFuel(data[1], data[2], "minecraft:coal")
-turtle.suckDown(fuelNeeded)
-turtle.select(1)
-turtle.refuel()
-
-print(string.format( "Extracting %d fuel...", fuelNeeded))
-
 -- Grab Ender Chest
 turtle.turnLeft(1)
 turtle.suck(1)
 turtle.turnRight(1)
+
+-- Refuel
+checkFuel()
 
 local startCoords = data[1]
 local finalHeading = moveTo(startCoords, getOrientation())
