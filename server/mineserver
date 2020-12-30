@@ -176,9 +176,7 @@ while (true) do
     print("Waiting for target signal...")
     event, side, senderChannel, replyChannel, msg, distance = os.pullEvent("modem_message")
 	if(msg == "RETURN_REQUEST") then
-    	target = vector.new(gps.locate())
-    	payloadMessage = string.format("%d %d %d", target.x, target.y+1, target.z)
-    	modem.transmit(replyChannel, SERVER_PORT, payloadMessage)
+    	modem.transmit(replyChannel, SERVER_PORT, gps.locate())
     else
 	    	
 	    -- Parse out coordinates and options
