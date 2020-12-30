@@ -299,6 +299,7 @@ while true do
 		event, side, senderChannel, replyChannel, msg, distance = event[1], event[2], event[3], event[4], event[5]
 		target = vector.new(msg[1], msg[2]+1, msg[3])
     	local finalHeading = returnTo(vector.new(target.x, target.y-3, target.z+2) getOrientation())
+    	manageInventory()
     	returnTo(target, finalHeading)
     	break
     elseif event[1] == "timer" and event[2] == timeout then
