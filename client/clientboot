@@ -296,7 +296,8 @@ while true do
 	modem.transmit(SERVER_PORT, CLIENT_PORT, "RETURN_REQUEST")
  	event = {os.pullEvent()}
 	if event[1] == "modem_message" then
-		event, side, senderChannel, replyChannel, msg, distance = event
+		a, side, senderChannel, replyChannel, msg, distance = event
+		print(msg)
 		target = vector.new(msg[1], msg[2]+1, msg[3])
     	returnTo(target, getOrientation)
     	break
