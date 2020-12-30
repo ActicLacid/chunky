@@ -305,12 +305,6 @@ while true do
   		timeout = os.startTimer(1)
   	end
 end
-local timoutWait = 90
-for i = 1, timoutWait, 1 do
-    os.sleep(1)
-    print(string.format( "Waiting for brothers %d/%d", i, timoutWait))
-end
 
-modem.transmit(SERVER_PORT, CLIENT_PORT, "cum")
-
+print("Executed emergency return.")
 -- pastebin run wPtGKMam acticlacid chunky / /client/ .
