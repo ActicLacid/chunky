@@ -57,11 +57,19 @@ function checkFuel()
             turtle.digUp()
             turtle.placeUp()
             turtle.suckUp()
-            turtle.select(getLavaIndex())
-            turtle.refuel()
-            turtle.dropUp()
-            turtle.digUp()
-            return true
+            lava = getLavaIndex()
+            while(true)
+            	if (lava ~= nil)
+            		turtle.refuel()
+           			turtle.dropUp()
+            		turtle.digUp()
+            		return true
+            	else
+            		print("No lava found. Retrying...")
+            		turtle.dropUp()
+            		turtle.suckUp()
+            	end
+            end
         end
         return false
     else
@@ -454,8 +462,9 @@ function returnTo(coords, heading)
 end
 
 endCoords = data[3]
-returnTo(endCoords ,finishedHeading)
+local lastHeading = returnTo(vector.new(endCoords.x, endCoords.y - 3, endCoords.z+2) ,finishedHeading)
 manageInventory()
+returnTo(endCoords, lastHeading)
 local timoutWait = 90
 for i = 1, timoutWait, 1 do
     os.sleep(1)
