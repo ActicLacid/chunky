@@ -58,8 +58,8 @@ function checkFuel()
             turtle.placeUp()
             turtle.suckUp()
             lava = getLavaIndex()
-            while(true)
-            	if (lava ~= nil)
+            while(true) do
+            	if (lava ~= nil) then
             		turtle.refuel()
            			turtle.dropUp()
             		turtle.digUp()
