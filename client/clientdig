@@ -1,5 +1,4 @@
 -- Code mostly by Michael Reeves, edited to support remote storage and pump lava out of the ender storage as fuel.--
--- Todo: Fix movement to take same path and slow down code so it doesn't outrun the chunkloaders. --
 --CLIENT DIG--
 
 local SLOT_COUNT = 16
@@ -50,7 +49,6 @@ function checkFuel()
     turtle.select(1)
     
     if(turtle.getFuelLevel() < 50) then
-        manageInventory()
         index = getEnderIndex()
         if (index ~= nil) then
             turtle.select(index)
