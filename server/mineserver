@@ -61,6 +61,7 @@ function checkFuel()
     index = getItemIndex("enderstorage:ender_storage")
     if(turtle.getFuelLevel() < 50) then
        	if(index ~= nil) then
+       		turtle.turnLeft()
        		if (not turtle.detect()) then
        			turtle.select(index)
        			turtle.suck()
@@ -71,12 +72,18 @@ function checkFuel()
        				turtle.drop()
        				turtle.select(index)
        				turtle.dig()
+       				turtle.turnRight()
        				return true
        			else
+       				print("Refuel failed. Retrying...")
+       				turtle.turnRight()
+       				os.sleep(0.5)
+       				checkFuel()
        				return false
        			end
        		else
-       			print("Front is obstructed")
+       			print("Left is obstructed")
+       			turtle.turnRight()
        			return false
        		end
        	else
