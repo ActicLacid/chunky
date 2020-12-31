@@ -64,6 +64,7 @@ function checkFuel()
        		turtle.turnLeft()
        		if (not turtle.detect()) then
        			turtle.select(index)
+       			turtle.place()
        			turtle.suck()
        			lava = getItemIndex("minecraft:lava_bucket")
        			if(lava ~= nil) then
